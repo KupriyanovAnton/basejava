@@ -7,30 +7,29 @@ public class ArrayStorage {
     private Resume[] storage = new Resume[10000];
     private int size = 0;
 
-
     void clear() {
-        size = 0;
-        Arrays.fill(storage, null);
+        if (size > 0) {
+            Arrays.fill(storage, 0, size - 1, null);
+            size = 0;
+        }
     }
 
     void save(Resume r) {
-        if (size < 10000) {
+        if (size < storage.length) {
             storage[size++] = r;
         }
     }
 
     Resume get(String uuid) {
-        int index = ArrayStorage.getIndex(storage, uuid, size);
+        int index = this.getIndex(uuid);
         if (index != -1) {
             return storage[index];
-        } else {
-            return null;
         }
-
+        return null;
     }
 
     void delete(String uuid) {
-        int index = ArrayStorage.getIndex(storage, uuid, size);
+        int index = this.getIndex(uuid);
         if (index == -1) return;
         for (int i = index; i < size - 1; i++) {
             storage[i] = storage[i + 1];
@@ -39,7 +38,7 @@ public class ArrayStorage {
         size--;
     }
 
-    private static int getIndex(Resume[] storage, String uuid, int size) {
+    private int getIndex(String uuid) {
         Resume tmp;
         for (int i = 0; i < size; i++) {
             tmp = storage[i];
@@ -54,10 +53,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        if (size != 0) {
-            return Arrays.copyOf(storage, size);
-        }
-        return new Resume[0];
+        return Arrays.copyOf(storage, size);
     }
 
     int size() {
