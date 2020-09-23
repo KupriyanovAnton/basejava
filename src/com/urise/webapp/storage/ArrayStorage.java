@@ -34,7 +34,6 @@ public class ArrayStorage {
             System.out.println("ERROR: Резюме " + resume.getUuid() + " не найдено");
             return;
         }
-        System.out.println("Resume " + resume.getUuid() + " was updated");
         storage[index] = resume;
     }
 
