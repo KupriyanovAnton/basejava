@@ -16,9 +16,8 @@ public class MainArray {
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Resume r;
         while (true) {
-            System.out.print("Введите одну из команд - (list | size | save uuid | delete uuid | get uuid | clear | exit): ");
+            System.out.print("Введите одну из команд - (list | size | save uuid | update uuid | delete uuid | get uuid | clear | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
             if (params.length < 1 || params.length > 2) {
                 System.out.println("Неверная команда.");
@@ -36,9 +35,11 @@ public class MainArray {
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "save":
-                    r = new Resume();
-                    r.setUuid(uuid);
-                    ARRAY_STORAGE.save(r);
+                    ARRAY_STORAGE.save(createNewResume(uuid));
+                    printAll();
+                    break;
+                case "update":
+                    ARRAY_STORAGE.update(createNewResume(uuid));
                     printAll();
                     break;
                 case "delete":
@@ -59,6 +60,12 @@ public class MainArray {
                     break;
             }
         }
+    }
+
+    static private Resume createNewResume(String uuid){
+        Resume resume = new Resume();
+        resume.setUuid(uuid);
+        return resume;
     }
 
     static void printAll() {

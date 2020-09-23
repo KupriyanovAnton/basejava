@@ -7,7 +7,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10_000];
     private int size = 0;
 
     public void clear() {
@@ -15,32 +15,33 @@ public class ArrayStorage {
         size = 0;
     }
 
-    public void save(Resume r) {
-        int index = getIndex(r.getUuid());
+    public void save(Resume resume) {
+        int index = getIndex(resume.getUuid());
         if (index != -1){
-            System.out.println("ERROR: Данный элемент существует в массиве");
+            System.out.println("ERROR: Резюме " + resume.getUuid() + " существует в массиве");
             return;
         }
         if (size == storage.length) {
-            System.out.println("ERROR: Массив заполнен");
+            System.out.println("ERROR: Массив заполнен.");
             return;
         }
-        storage[size++] = r;
+        storage[size++] = resume;
     }
 
-    public void update(Resume r){
-        int index = getIndex(r.getUuid());
+    public void update(Resume resume){
+        int index = getIndex(resume.getUuid());
         if (index == -1) {
-            System.out.println("ERROR: Элемент не найден");
+            System.out.println("ERROR: Резюме " + resume.getUuid() + " не найдено");
             return;
         }
-        storage[index] = r;
+        System.out.println("Resume " + resume.getUuid() + " was updated");
+        storage[index] = resume;
     }
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index == -1) {
-            System.out.println("ERROR: Элемент не найден");
+            System.out.println("ERROR: Резюме " + uuid + " не найдено");
             return null;
         }
         return storage[index];
@@ -49,7 +50,7 @@ public class ArrayStorage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index == -1) {
-            System.out.println("ERROR: Элемент не найден");
+            System.out.println("ERROR: Резюме " + uuid + " не найдено");
             return;
         }
         storage[index] = storage[size - 1];
