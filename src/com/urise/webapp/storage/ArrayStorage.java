@@ -6,8 +6,9 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10_000];
+public class ArrayStorage implements Storage {
+    private static final int STORAGE_LIMIT = 10_000;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
@@ -16,12 +17,11 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index != -1){
+        if (getIndex(resume.getUuid()) != -1){
             System.out.println("ERROR: Резюме " + resume.getUuid() + " существует в массиве");
             return;
         }
-        if (size == storage.length) {
+        if (size == STORAGE_LIMIT) {
             System.out.println("ERROR: Массив заполнен.");
             return;
         }
@@ -70,6 +70,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
+        Arrays.copyOfRange(storage, 0,  size);
         return Arrays.copyOf(storage, size);
     }
 
