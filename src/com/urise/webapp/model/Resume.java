@@ -16,12 +16,16 @@ public class Resume {
         this.uuid = uuid;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Resume resume = (Resume) o;
+
+
 
         if (!uuid.equals(resume.uuid)) return false;
 

@@ -16,6 +16,8 @@ public class ArrayStorage implements Storage {
         size = 0;
     }
 
+
+
     public void save(Resume resume) {
         if (getIndex(resume.getUuid()) != -1){
             System.out.println("ERROR: Резюме " + resume.getUuid() + " существует в массиве");
