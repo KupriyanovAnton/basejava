@@ -3,7 +3,7 @@ package ru.javawebinar.basejava.model;
 /**
  * Initial resume class
  */
-public class Resume implements Comparable<Resume>{
+public class Resume implements Comparable<Resume> {
 
     // Unique identifier
     private String uuid;
@@ -22,8 +22,6 @@ public class Resume implements Comparable<Resume>{
         if (o == null || getClass() != o.getClass()) return false;
 
         Resume resume = (Resume) o;
-
-
 
         if (!uuid.equals(resume.uuid)) return false;
 
