@@ -5,13 +5,13 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 10_000;
+    private static final int STORAGE_LIMIT = 10_000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
     public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (indexIncluded(index)) {
+        if (index >= 0) {
             System.out.println("Resume " + resume.getUuid() + " already exist");
             return;
         }
@@ -25,7 +25,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (!indexIncluded(index)) {
+        if (index < 0) {
             System.out.println("Resume " + uuid + " not exist");
             return null;
         }
@@ -34,7 +34,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (!indexIncluded(index)) {
+        if (index < 0) {
             System.out.println("Resume " + resume.getUuid() + " not exist");
             return;
         }
@@ -43,7 +43,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (!indexIncluded(index)) {
+        if (index < 0) {
             System.out.println("Resume " + uuid + " not exist");
             return;
         }
@@ -63,10 +63,6 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public int size() {
         return size;
-    }
-
-    protected Boolean indexIncluded(int index) {
-        return index >= 0;
     }
 
     protected abstract int getIndex(String uuid);
