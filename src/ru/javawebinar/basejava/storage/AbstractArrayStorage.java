@@ -19,8 +19,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("Array is full");
             return;
         }
-        int position = getPosition(index);
-        putValue(position, resume);
+        saveResume(index, resume);
         size++;
     }
 
@@ -30,8 +29,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("Resume " + uuid + " not exist");
             return null;
         }
-        int position = getPosition(index);
-        return storage[position];
+        return storage[index];
     }
 
     public void update(Resume resume) {
@@ -40,8 +38,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("Resume " + resume.getUuid() + " not exist");
             return;
         }
-        int position = getPosition(index);
-        putValue(position, resume);
+        saveResume(index, resume);
     }
 
     public void delete(String uuid) {
@@ -50,8 +47,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("Resume " + uuid + " not exist");
             return;
         }
-        int position = getPosition(index);
-        fillEmptyPosition(position);
+        deleteResume(index);
         storage[size - 1] = null;
         size--;
     }
@@ -62,20 +58,20 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+        return Arrays.copyOf(storage, size);
     }
 
     public int size() {
         return size;
     }
 
+    protected Boolean indexIncluded(int index) {
+        return index >= 0;
+    }
+
     protected abstract int getIndex(String uuid);
 
-    protected abstract Boolean indexIncluded(int index);
+    protected abstract void deleteResume(int indexpo);
 
-    protected abstract int getPosition(int index);
-
-    protected abstract void fillEmptyPosition(int position);
-
-    protected abstract void putValue(int position, Resume value);
+    protected abstract void saveResume(int index, Resume resume);
 }

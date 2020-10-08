@@ -14,27 +14,16 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected Boolean indexIncluded(int index) {
-        return index >= 0;
+    protected void deleteResume(int index) {
+        System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
     }
 
     @Override
-    protected int getPosition(int index) {
-        return (index < 0) ? -(index + 1) : index;
-    }
-
-    @Override
-    protected void fillEmptyPosition(int position) {
-        for (int i = position; i < size - 1; i++) {
-            storage[i] = storage[i + 1];
+    protected void saveResume(int index, Resume resume) {
+        if (!indexIncluded(index)) {
+            index = -(index + 1);
+            System.arraycopy(storage, index, storage, index + 1, size - index);
         }
-    }
-
-    @Override
-    protected void putValue(int position, Resume value) {
-        for (int i = size - 1; i >= position; i--) {
-            storage[i + 1] = storage[i];
-        }
-        storage[position] = value;
+        storage[index] = resume;
     }
 }

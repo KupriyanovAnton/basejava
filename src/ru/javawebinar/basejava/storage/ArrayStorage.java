@@ -16,22 +16,12 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected Boolean indexIncluded(int index) {
-        return index != -1;
+    protected void deleteResume(int index) {
+        storage[index] = storage[size - 1];
     }
 
     @Override
-    protected int getPosition(int index) {
-        return (index == -1) ? size : index;
-    }
-
-    @Override
-    protected void fillEmptyPosition(int position) {
-        storage[position] = storage[size - 1];
-    }
-
-    @Override
-    protected void putValue(int position, Resume value) {
-        storage[position] = value;
+    protected void saveResume(int index, Resume resume) {
+        storage[size] = resume;
     }
 }
