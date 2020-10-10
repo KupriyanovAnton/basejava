@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 public abstract class AbstractArrayStorage implements Storage {
     private static final int STORAGE_LIMIT = 10_000;
-    protected Resume[] storage = new Resume[STORAGE_LIMIT];
-    protected int size = 0;
+    Resume[] storage = new Resume[STORAGE_LIMIT];
+    int size = 0;
 
     public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
@@ -38,7 +38,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("Resume " + resume.getUuid() + " not exist");
             return;
         }
-        saveResume(index, resume);
+        storage[index] = resume;
     }
 
     public void delete(String uuid) {
@@ -65,9 +65,9 @@ public abstract class AbstractArrayStorage implements Storage {
         return size;
     }
 
-    protected abstract int getIndex(String uuid);
+    abstract int getIndex(String uuid);
 
-    protected abstract void deleteResume(int indexpo);
+    abstract void deleteResume(int indexpo);
 
-    protected abstract void saveResume(int index, Resume resume);
+    abstract void saveResume(int index, Resume resume);
 }
